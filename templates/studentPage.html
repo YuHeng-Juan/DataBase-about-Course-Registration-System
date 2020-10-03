@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>studentPage</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+ 
+    // 页面加载初始化, 默认是資電學院第一个城市
+	$(function() {
+        //對學院進行選擇, 選擇資電學院
+        $("#college>option[value='資電學院']").attr("selected", true);
+ 
+        //對學系進行選擇
+		$("#dept> option").hide();//先全部隐藏
+        $("#CLA> option").hide();
+		var selectWord = "#dept> option[college = '" + "資電學院" + "']";
+		$(selectWord).show(); //選擇属性college為資電學院的那一部分顯示,其他的由于前面hide()不会显示
+		$(selectWord).eq(0).attr("selected", true);
+ 
+    
+//****************************重要*******************************************************
+    //这个是最主要的事件, 当选择的學系改变时, 出現可選的學系也會改變
+    $("#college").change(function() {
+ 
+		//獲取當時選中的的學院名稱
+		var college = $("#college").val();
+        
+ 
+		//先将所有學系隐藏並設為未選中
+		$("#dept > option").attr("selected", false).hide();
+        // 条件选择
+		var selectWord = "#dept> option[college = '" + college + "']";
+        // 将學院属性为选中的學院的option设置为显示, 并且排在第一个的标签设置为选中(不设置选中可能会出现bug
+		$(selectWord).show().eq(0).attr("selected", true);//部分显示
+
+        $("#dept").change(); //讓第二個跟第三個'連動'
+	});
+
+    $("#dept").change(function() {
+ 
+        var dept = $("#dept").val();
+
+        $("#CLA > option").attr("selected", false).hide();
+
+        var selectWord = "#CLA> option[dept = '" + dept + "']";
+        
+        $(selectWord).show().eq(0).attr("selected", true);
+    });
+ 
+})
+</script>
+</head>
+<!-- 引入jquery, 这里写的是笔者自己的路径, 请读者自己下载jquery并自己进行设置 -->
+<body>
+    <form method="post" action="/action">
+        <span>學院</span>
+        <select  id="college">
+            <option value="資電學院">資電學院</option>
+            <option value="商學院">商學院</option>
+            <option value="通識中心">通識中心</option>
+        </select>
+
+        <span>學系</span>
+        <select id="dept">
+            <option value = "資訊工程學系" college="資電學院">資訊工程學系</option> <!-- 给學系加了一个自定義属性college, 用來標示屬於哪一個學院 -->
+
+            <option value = "企業管理學系" college="商學院">企業管理學系</option>
+
+            <option value = "通識核心課程" college="通識中心">通識核心課程</option>
+        </select>
+
+        <span>班級</span>
+        <select id="CLA">
+            <option value = "資訊一甲" dept="資訊工程學系">資訊一甲</option> 
+            <option value = "資訊一乙" dept="資訊工程學系">資訊一乙</option> 
+            <option value = "資訊一丙" dept="資訊工程學系">資訊一丙</option> 
+            <option value = "資訊二甲" dept="資訊工程學系">資訊二甲</option>
+            <option value = "資訊二乙" dept="資訊工程學系">資訊二乙</option> 
+            <option value = "資訊二丙" dept="資訊工程學系">資訊二丙</option> 
+            <option value = "資訊二丁" dept="資訊工程學系">資訊二丁</option>  
+            <option value = "資訊三甲" dept="資訊工程學系">資訊三甲</option>
+            <option value = "資訊三乙" dept="資訊工程學系">資訊三乙</option> 
+            <option value = "資訊三丙" dept="資訊工程學系">資訊三丙</option> 
+            <option value = "資訊三丁" dept="資訊工程學系">資訊三丁</option>
+            <option value = "資訊碩一" dept="資訊工程學系">資訊碩一</option>
+            <option value = "資訊碩二" dept="資訊工程學系">資訊碩二</option>
+            <option value = "資訊博一" dept="資訊工程學系">資訊博一</option>
+            <option value = "資訊博二" dept="資訊工程學系">資訊博二</option>
+            <option value = "電腦系統學程資訊三" dept="資訊工程學系">電腦系統學程資訊三</option>
+            <option value = "軟體工程學程資訊三" dept="資訊工程學系">軟體工程學程資訊三</option>
+            <option value = "網路與資安學程資訊三" dept="資訊工程學系">網路與資安學程資訊三</option>
+            <option value = "資訊跨域學程資訊三" dept="資訊工程學系">資訊跨域學程資訊三</option>
+
+            <option value = "企管一甲" dept="企業管理學系">企管一甲</option>
+            <option value = "企管一乙" dept="企業管理學系">企管一乙</option>
+            <option value = "企管二甲" dept="企業管理學系">企管二甲</option>
+            <option value = "企管二乙" dept="企業管理學系">企管二乙</option>
+            <option value = "企管三甲" dept="企業管理學系">企管三甲</option>
+            <option value = "企管三乙" dept="企業管理學系">企管三乙</option>
+            <option value = "企管四甲" dept="企業管理學系">企管四甲</option>
+            <option value = "企管四乙" dept="企業管理學系">企管四乙</option>
+            <option value = "企管碩一" dept="企業管理學系">企管碩一</option>
+            <option value = "企管碩二" dept="企業管理學系">企管碩二</option>
+
+            <option value = "通識－社會整合(SB)" dept="通識核心課程">通識－社會整合(SB)</option>
+            <option value = "通識－人文(H)" dept="通識核心課程">通識－人文(H)</option>
+            <option value = "通識－自然(N)" dept="通識核心課程">通識－自然(N)</option>
+            <option value = "通識－社會(S)" dept="通識核心課程">通識－社會(S)</option>
+            <option value = "通識－統合(M)" dept="通識核心課程">通識－統合(M)</option>
+            <option value = "通識－人文(夜)(H)" dept="通識核心課程">通識－人文(夜)(H)</option>
+            <option value = "通識－自然(夜)(N)" dept="通識核心課程">通識－自然(夜)(N)</option>
+            <option value = "通識－社會(夜)(S)" dept="通識核心課程">通識－社會(夜)(S)</option>
+            <option value = "通識－統合(夜)(M)" dept="通識核心課程">通識－統合(夜)(M)</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</body>
+
+</html>
